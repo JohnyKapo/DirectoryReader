@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="resources\LoadUpFolderContent_FolderContainsFolderChildrenWithCyclicSymLinks\**" />
+    <Compile Remove="resources\LoadUpFolderContent_SingleLevelFolder\single-level-folder\**" />
+    <EmbeddedResource Remove="resources\LoadUpFolderContent_FolderContainsFolderChildrenWithCyclicSymLinks\**" />
+    <EmbeddedResource Remove="resources\LoadUpFolderContent_SingleLevelFolder\single-level-folder\**" />
+    <None Remove="resources\LoadUpFolderContent_FolderContainsFolderChildrenWithCyclicSymLinks\**" />
+    <None Remove="resources\LoadUpFolderContent_SingleLevelFolder\single-level-folder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="MSTest" Version="3.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleApplication\ConsoleApplication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="resources\LoadUpFolderContent_ContainsMultiplePostfixTypes\level-1-folder\level-2-folder\level-3-folder\" />
+    <Folder Include="resources\LoadUpFolderContent_ContainsOneFolderAndOneFile\level-1-folder\level-2-folder\" />
+    <Folder Include="resources\LoadUpFolderContent_InputPathIsAFile\" />
+    <Folder Include="resources\LoadUpFolderContent_SingleLevelFolder\level-1-folder\" />
+  </ItemGroup>
+
+</Project>

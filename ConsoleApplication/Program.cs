@@ -3,4 +3,5 @@
 /**
  * Main app, console UI
  */
-ConsoleUtil.MainLoop();
+ConsoleUtil console = new ConsoleUtil();
+console.MainLoop();

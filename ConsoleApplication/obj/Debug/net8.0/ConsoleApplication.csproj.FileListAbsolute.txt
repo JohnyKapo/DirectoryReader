@@ -12,3 +12,4 @@ C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleApplication.pdb
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleApplication.genruntimeconfig.cache
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ref\ConsoleApplication.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleApplication.sourcelink.json

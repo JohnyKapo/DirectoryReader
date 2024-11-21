@@ -24,9 +24,51 @@ namespace ConsoleApplication.serialization
             {
                 return JsonSerializer.Deserialize<Folder>(json);
             }
-            catch (NotSupportedException e)
+            catch (Exception e)
             {
                 // log
+                return null;
+            }
+        }
+
+        public async void SerializeToFile(Folder folder, string path)
+        {
+            if (folder == null || path == null)
+            {
+                return;
+            }
+
+            try
+            {
+                if (!File.Exists(path))
+                {
+                    using FileStream fs = File.Create(path);
+                }
+                else
+                {
+                    Console.WriteLine("File already exists. The content will be rewritten.");
+                }
+
+                string json = Serialize(folder);
+
+                using StreamWriter outputFile = new StreamWriter(path);
+                await outputFile.WriteAsync(json);
+            }
+            catch
+            {
+                // log
+            }
+        }
+
+        public async Task<Folder> DeserializeFolderStructureFromFile(string path)
+        {
+            try
+            {
+                using StreamReader inputFile = new StreamReader(path);
+                return Deserialize(await inputFile.ReadToEndAsync());
+            }
+            catch
+            {
                 return null;
             }
         }

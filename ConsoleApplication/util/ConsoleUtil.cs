@@ -1,19 +1,13 @@
 ﻿using ConsoleApplication.model;
 using ConsoleApplication.serialization;
 using ConsoleApplication.service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace ConsoleApplication.util
 {
     public class ConsoleUtil
     {
 
-        public static void MainLoop()
+        public void MainLoop()
         {
             LoadingService LoadingService = new LoadingService();
             CustomJsonSerializer jsonSerializer = new CustomJsonSerializer();
@@ -23,8 +17,8 @@ namespace ConsoleApplication.util
                 Console.WriteLine("Please provide a folder path or JSON file containing directory information: ");
                 string input = Console.ReadLine();
 
-                string json = jsonSerializer.Serialize(LoadingService.LoadUpFolderContent(input)); 
-                Console.WriteLine(json);
+                Folder folder = LoadingService.LoadUpFolderContent(input);
+                PrintPostfixes(folder.NestedPostfixes);
 
                 Console.WriteLine("Extensions found in folder: " + input);
                 Console.WriteLine("Would you like to save the folder to JSON? [y(es)/n(o)]");
@@ -38,6 +32,7 @@ namespace ConsoleApplication.util
                         case "y":
                         case "yes":
                             termTrigger = true;
+                            SerializeJsonToFile(folder, jsonSerializer);
                             break;
                         case "n":
                         case "no":
@@ -50,6 +45,23 @@ namespace ConsoleApplication.util
                             break;
                     }
                 }
+
+                Console.WriteLine("------------------------------------------------------------------------------");
+            }
+        }
+
+        private void SerializeJsonToFile(Folder folder, CustomJsonSerializer jsonSerializer)
+        {
+            Console.WriteLine("Please specify path, where the the file should be saved: ");
+            string pathInput = Console.ReadLine();
+            jsonSerializer.SerializeToFile(folder, pathInput);
+        }
+
+        private void PrintPostfixes(List<Postfix> postfixes)
+        {
+            foreach (Postfix postfix in postfixes) {
+                Console.WriteLine("Type: " + postfix.PostfixVal + " | " + "Count: " + postfix.Count);
+                Console.WriteLine("--");
             }
         }
 
