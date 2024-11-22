@@ -8,24 +8,12 @@ namespace ConsoleApplicationTests
     {
         string baseSaveJsonPath = null;
 
-        public void Flush(string path)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("File with path '" + baseSaveJsonPath + "' could not be deleted. Error message: " + ex.Message);
-            }
-        }
-
         [TestInitialize]
         public void Init()
         {
-            var enviroment = System.Environment.CurrentDirectory;
-            string projectDirectory = Directory.GetParent(enviroment).Parent.FullName;
-            baseSaveJsonPath = projectDirectory + "\\..\\resources\\";
+            var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string testAssemblyDir = Path.GetDirectoryName(location);;
+            baseSaveJsonPath = Path.Combine(testAssemblyDir, "..", "..", "..", "resources");
         }
 
 
@@ -65,7 +53,6 @@ namespace ConsoleApplicationTests
              *      - {level-2-file1.json}
              *      - {level-2-file2.yaml}
              */
-
             CustomJsonSerializer serializer = new CustomJsonSerializer();
 
             // Level 1
@@ -223,7 +210,7 @@ namespace ConsoleApplicationTests
         {
             CustomJsonSerializer serializer = new CustomJsonSerializer();
             serializer.SerializeToFile(null, null);
-            Assert.IsFalse(File.Exists(baseSaveJsonPath + "output1.json"));
+            Assert.IsFalse(File.Exists(baseSaveJsonPath + "\\output1.json"));
         }
 
         [TestMethod]
@@ -231,22 +218,21 @@ namespace ConsoleApplicationTests
         {
             CustomJsonSerializer serializer = new CustomJsonSerializer();
             serializer.SerializeToFile(new Folder("level-1-folder", "./level-1-folder"), "invalid-path/to-somewhere/where-it-should-not-point/output2.json");
-            Assert.IsFalse(File.Exists(baseSaveJsonPath + "output2.json"));
+            Assert.IsFalse(File.Exists(baseSaveJsonPath + "\\output2.json"));
         }
 
         [TestMethod]
         public async Task SerializeToFile_BothParametersAreValid_JsonShouldBeCreatedAndSavedAsync()
         {
             CustomJsonSerializer serializer = new CustomJsonSerializer();
-            serializer.SerializeToFile(new Folder("level-1-folder", "./level-1-folder"), baseSaveJsonPath + "output3.json");
-            Assert.IsTrue(File.Exists(baseSaveJsonPath + "output3.json"));
+            serializer.SerializeToFile(new Folder("level-1-folder", "./level-1-folder"), baseSaveJsonPath + "\\output3.json");
+            Assert.IsTrue(File.Exists(baseSaveJsonPath + "\\output3.json"));
             string fileContent;
-            using (StreamReader file = new StreamReader(baseSaveJsonPath + "output3.json"))
+            using (StreamReader file = new StreamReader(baseSaveJsonPath + "\\output3.json"))
             {
                 fileContent = await file.ReadToEndAsync();
             }
             Assert.AreEqual("""{"NestedFiles":[],"NestedFolders":[],"NestedPostfixes":[],"Name":"level-1-folder","Path":"./level-1-folder"}""", fileContent);
-            Flush(baseSaveJsonPath + "output3.json");
         }
 
         [TestMethod]
@@ -301,16 +287,15 @@ namespace ConsoleApplicationTests
             level3folder2.NestedFolders.Add(level4Folder);
             level3folder1.NestedPostfixes.Add(new Postfix("yang"));
 
-            serializer.SerializeToFile(folder, baseSaveJsonPath + "output4.json");
-            Assert.IsTrue(File.Exists(baseSaveJsonPath + "output4.json"));
+            serializer.SerializeToFile(folder, baseSaveJsonPath + "\\output4.json");
+            Assert.IsTrue(File.Exists(baseSaveJsonPath + "\\output4.json"));
             string fileContent;
-            using (StreamReader file = new StreamReader(baseSaveJsonPath + "output4.json"))
+            using (StreamReader file = new StreamReader(baseSaveJsonPath + "\\output4.json"))
             {
                 fileContent = await file.ReadToEndAsync();
             }
             Assert.AreEqual("""{"NestedFiles":[{"Postfix":"json","Name":"level-2-file1.json","Path":"./level-1-folder/level-2-file1.json"},{"Postfix":"yaml","Name":"level-2-file2.yaml","Path":"./level-1-folder/level-2-file2.yaml"}],"NestedFolders":[{"NestedFiles":[],"NestedFolders":[{"NestedFiles":[{"Postfix":"yang","Name":"level-4-file.yang","Path":"./level-1-folder/level-2-folder1/level-3-folder/level-4-file.yang"}],"NestedFolders":[],"NestedPostfixes":[{"PostfixVal":"yang","Count":1}],"Name":"level-3-folder","Path":"./level-1-folder/level-2-folder1/level-3-folder"}],"NestedPostfixes":[{"PostfixVal":"yang","Count":1}],"Name":"level-2-folder1","Path":"./level-1-folder/level-2-folder1"},{"NestedFiles":[{"Postfix":"xml","Name":"level-3-file.xml","Path":"./level-1-folder/level-2-folder2/level-3-file.xml"}],"NestedFolders":[{"NestedFiles":[],"NestedFolders":[{"NestedFiles":[],"NestedFolders":[],"NestedPostfixes":[],"Name":"level-4-folder","Path":"./level-1-folder/level-2-folder2/level-3-folder/level-4-folder"}],"NestedPostfixes":[],"Name":"level-3-folder","Path":"./level-1-folder/level-2-folder2/level-3-folder"}],"NestedPostfixes":[{"PostfixVal":"xml","Count":1}],"Name":"level-2-folder2","Path":"./level-1-folder/level-2-folder2"}],"NestedPostfixes":[{"PostfixVal":"yang","Count":1},{"PostfixVal":"json","Count":1},{"PostfixVal":"yaml","Count":1},{"PostfixVal":"xml","Count":1}],"Name":"level-1-folder","Path":"./level-1-folder"}""", 
                 fileContent);
-            Flush(baseSaveJsonPath + "output4.json");
         }
 
         [TestMethod]
@@ -333,7 +318,7 @@ namespace ConsoleApplicationTests
         public void DeserializeFolderStructureFromFile_PathIsValid_DeserializedSimpleStructure()
         {
             CustomJsonSerializer serializer = new CustomJsonSerializer();
-            Folder folder = serializer.DeserializeFolderStructureFromFile(baseSaveJsonPath + "input1.json").Result;
+            Folder folder = serializer.DeserializeFolderStructureFromFile(baseSaveJsonPath + "\\input1.json").Result;
             Assert.IsNotNull(folder);
             Assert.AreEqual("level-1-folder", folder.Name);
             Assert.AreEqual("./level-1-folder", folder.Path);
@@ -359,7 +344,7 @@ namespace ConsoleApplicationTests
              *      - {level-2-file2.yaml}
              */
             CustomJsonSerializer serializer = new CustomJsonSerializer();
-            Folder folder = serializer.DeserializeFolderStructureFromFile(baseSaveJsonPath + "input2.json").Result;
+            Folder folder = serializer.DeserializeFolderStructureFromFile(baseSaveJsonPath + "\\input2.json").Result;
 
             // Level 1
             Assert.AreEqual("level-1-folder", folder.Name);
