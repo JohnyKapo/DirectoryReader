@@ -21,21 +21,21 @@ namespace ConsoleApplicationTests
         public void LoadUpFolderContent_PathIsNull()
         {
             LoadingService service = new LoadingService();
-            Assert.ThrowsException<DirectoryNotFoundException>(() => service.LoadUpFolderContent(null));
+            Assert.IsNull(service.LoadUpFolderContent(null));
         }
 
         [TestMethod]
         public void LoadUpFolderContent_PathIsInvalid()
         {
             LoadingService service = new LoadingService();
-            Assert.ThrowsException<DirectoryNotFoundException>(() => service.LoadUpFolderContent("XXX:\\Invalid\\Path\\To\\Folder"));
+            Assert.IsNull(service.LoadUpFolderContent("XXX:\\Invalid\\Path\\To\\Folder"));
         }
 
         [TestMethod]
         public void LoadUpFolderContent_InputPathIsAFile()
         {
             LoadingService service = new LoadingService();
-            Assert.ThrowsException<DirectoryNotFoundException>(() => service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_InputPathIsAFile\\level-1-file.json"));
+            Assert.IsNull(service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_InputPathIsAFile\\level-1-file.json"));
         }
 
         [TestMethod]

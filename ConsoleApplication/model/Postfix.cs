@@ -1,5 +1,10 @@
 ﻿namespace ConsoleApplication.model
 {
+    /**
+     * <summary>
+     * Class <c>Postfix</c> contains information about a certain postfix in folder structure.
+     * </summary>
+     */
     public class Postfix
     {
         public string PostfixVal { get; set; }

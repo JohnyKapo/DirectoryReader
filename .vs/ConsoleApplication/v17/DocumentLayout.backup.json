@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AF8F1380-14B7-40A4-BE80-0D35CC8EBC56}|ConsoleApplicationTests\\ConsoleApplicationTests.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplicationtests\\serializationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF8F1380-14B7-40A4-BE80-0D35CC8EBC56}|ConsoleApplicationTests\\ConsoleApplicationTests.csproj|solutionrelative:consoleapplicationtests\\serializationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AF8F1380-14B7-40A4-BE80-0D35CC8EBC56}|ConsoleApplicationTests\\ConsoleApplicationTests.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplicationtests\\loadingservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF8F1380-14B7-40A4-BE80-0D35CC8EBC56}|ConsoleApplicationTests\\ConsoleApplicationTests.csproj|solutionrelative:consoleapplicationtests\\loadingservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplication\\model\\postfix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|solutionrelative:consoleapplication\\model\\postfix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplication\\model\\fileobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|solutionrelative:consoleapplication\\model\\fileobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplication\\serialization\\customjsonserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|solutionrelative:consoleapplication\\serialization\\customjsonserializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplication\\model\\folder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|solutionrelative:consoleapplication\\model\\folder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|c:\\users\\johny\\source\\repos\\consoleapplication\\consoleapplication\\service\\loadingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{175267D5-19C4-46CD-AFFB-D2EEA9A40992}|ConsoleApplication\\ConsoleApplication.csproj|solutionrelative:consoleapplication\\service\\loadingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Postfix.cs",
-              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\model\\Postfix.cs",
-              "RelativeDocumentMoniker": "ConsoleApplication\\model\\Postfix.cs",
-              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\model\\Postfix.cs",
-              "RelativeToolTip": "ConsoleApplication\\model\\Postfix.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAcAAAAAAAAAA==",
+              "Title": "LoadingService.cs",
+              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\service\\LoadingService.cs",
+              "RelativeDocumentMoniker": "ConsoleApplication\\service\\LoadingService.cs",
+              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\service\\LoadingService.cs",
+              "RelativeToolTip": "ConsoleApplication\\service\\LoadingService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T16:32:00.986Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CustomJsonSerializer.cs",
-              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\serialization\\CustomJsonSerializer.cs",
-              "RelativeDocumentMoniker": "ConsoleApplication\\serialization\\CustomJsonSerializer.cs",
-              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\serialization\\CustomJsonSerializer.cs",
-              "RelativeToolTip": "ConsoleApplication\\serialization\\CustomJsonSerializer.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAUwBgAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T16:01:43.583Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FileObject.cs",
-              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\model\\FileObject.cs",
-              "RelativeDocumentMoniker": "ConsoleApplication\\model\\FileObject.cs",
-              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\model\\FileObject.cs",
-              "RelativeToolTip": "ConsoleApplication\\model\\FileObject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T16:05:36.974Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Folder.cs",
-              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\model\\Folder.cs",
-              "RelativeDocumentMoniker": "ConsoleApplication\\model\\Folder.cs",
-              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplication\\model\\Folder.cs",
-              "RelativeToolTip": "ConsoleApplication\\model\\Folder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T16:03:15.239Z",
+              "WhenOpened": "2024-11-22T12:33:19.522Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SerializationTests.cs",
-              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplicationTests\\SerializationTests.cs",
-              "RelativeDocumentMoniker": "ConsoleApplicationTests\\SerializationTests.cs",
-              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplicationTests\\SerializationTests.cs",
-              "RelativeToolTip": "ConsoleApplicationTests\\SerializationTests.cs",
-              "ViewState": "AgIAAKsAAAAAAAAAAAAjwMMAAAAJAAAAAAAAAA==",
+              "Title": "LoadingServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplicationTests\\LoadingServiceTests.cs",
+              "RelativeDocumentMoniker": "ConsoleApplicationTests\\LoadingServiceTests.cs",
+              "ToolTip": "C:\\Users\\Johny\\source\\repos\\ConsoleApplication\\ConsoleApplicationTests\\LoadingServiceTests.cs",
+              "RelativeToolTip": "ConsoleApplicationTests\\LoadingServiceTests.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACUAAACpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T12:54:10.602Z",
+              "WhenOpened": "2024-11-22T12:33:24.605Z",
               "EditorCaption": ""
             }
           ]

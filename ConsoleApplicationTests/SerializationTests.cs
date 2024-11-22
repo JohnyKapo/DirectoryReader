@@ -6,6 +6,29 @@ namespace ConsoleApplicationTests
     [TestClass]
     public class SerializationTests
     {
+        string baseSaveJsonPath = null;
+
+        public void Flush(string path)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("File with path '" + baseSaveJsonPath + "' could not be deleted. Error message: " + ex.Message);
+            }
+        }
+
+        [TestInitialize]
+        public void Init()
+        {
+            var enviroment = System.Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(enviroment).Parent.FullName;
+            baseSaveJsonPath = projectDirectory + "\\..\\resources\\";
+        }
+
+
         [TestMethod]
         public void Serialize_InputIsNull()
         {
@@ -195,5 +218,207 @@ namespace ConsoleApplicationTests
             Assert.AreEqual("yang", level4File.Postfix);
         }
 
+        [TestMethod]
+        public void SerializeToFile_BothFolderAndPathIsNull()
+        {
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            serializer.SerializeToFile(null, null);
+            Assert.IsFalse(File.Exists(baseSaveJsonPath + "output1.json"));
+        }
+
+        [TestMethod]
+        public void SerializeToFile_FolderIsValidAndPathIsInvalid()
+        {
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            serializer.SerializeToFile(new Folder("level-1-folder", "./level-1-folder"), "invalid-path/to-somewhere/where-it-should-not-point/output2.json");
+            Assert.IsFalse(File.Exists(baseSaveJsonPath + "output2.json"));
+        }
+
+        [TestMethod]
+        public async Task SerializeToFile_BothParametersAreValid_JsonShouldBeCreatedAndSavedAsync()
+        {
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            serializer.SerializeToFile(new Folder("level-1-folder", "./level-1-folder"), baseSaveJsonPath + "output3.json");
+            Assert.IsTrue(File.Exists(baseSaveJsonPath + "output3.json"));
+            string fileContent;
+            using (StreamReader file = new StreamReader(baseSaveJsonPath + "output3.json"))
+            {
+                fileContent = await file.ReadToEndAsync();
+            }
+            Assert.AreEqual("""{"NestedFiles":[],"NestedFolders":[],"NestedPostfixes":[],"Name":"level-1-folder","Path":"./level-1-folder"}""", fileContent);
+            Flush(baseSaveJsonPath + "output3.json");
+        }
+
+        [TestMethod]
+        public async Task SerializeToFile_MoreAdvancedStructure_JsonShouldBeCreatedAndSavedAsync()
+        {
+            /**
+             * Structure:
+             * [level-1-folder]
+             *      - [level-2-folder1]
+             *          - [level-3-folder]
+             *              - {level-4-file.yang}
+             *      - [level-2-folder2]
+             *          - [level-3-folder]
+             *              - [level-4-folder]
+             *          - {level-3-file.xml}
+             *      - {level-2-file1.json}
+             *      - {level-2-file2.yaml}
+             */
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+
+            // Level 1
+            Folder folder = new Folder("level-1-folder", "./level-1-folder");
+            folder.NestedPostfixes.Add(new Postfix("yang"));
+            folder.NestedPostfixes.Add(new Postfix("json"));
+            folder.NestedPostfixes.Add(new Postfix("yaml"));
+            folder.NestedPostfixes.Add(new Postfix("xml"));
+
+            // Level 2
+            Folder level2Folder1 = new Folder("level-2-folder1", "./level-1-folder/level-2-folder1");
+            Folder level2Folder2 = new Folder("level-2-folder2", "./level-1-folder/level-2-folder2");
+            FileObject level2File1 = new FileObject("level-2-file1.json", "./level-1-folder/level-2-file1.json", "json");
+            FileObject level2File2 = new FileObject("level-2-file2.yaml", "./level-1-folder/level-2-file2.yaml", "yaml");
+            folder.NestedFolders.Add(level2Folder1);
+            folder.NestedFolders.Add(level2Folder2);
+            folder.NestedFiles.Add(level2File1);
+            folder.NestedFiles.Add(level2File2);
+            level2Folder1.NestedPostfixes.Add(new Postfix("yang"));
+            level2Folder2.NestedPostfixes.Add(new Postfix("xml"));
+
+            // Level 3
+            Folder level3folder1 = new Folder("level-3-folder", "./level-1-folder/level-2-folder1/level-3-folder");
+            Folder level3folder2 = new Folder("level-3-folder", "./level-1-folder/level-2-folder2/level-3-folder");
+            FileObject level3File = new FileObject("level-3-file.xml", "./level-1-folder/level-2-folder2/level-3-file.xml", "xml");
+            level2Folder1.NestedFolders.Add(level3folder1);
+            level2Folder2.NestedFolders.Add(level3folder2);
+            level2Folder2.NestedFiles.Add(level3File);
+
+            // Level 4
+            FileObject level4File = new FileObject("level-4-file.yang", "./level-1-folder/level-2-folder1/level-3-folder/level-4-file.yang", "yang");
+            Folder level4Folder = new Folder("level-4-folder", "./level-1-folder/level-2-folder2/level-3-folder/level-4-folder");
+            level3folder1.NestedFiles.Add(level4File);
+            level3folder2.NestedFolders.Add(level4Folder);
+            level3folder1.NestedPostfixes.Add(new Postfix("yang"));
+
+            serializer.SerializeToFile(folder, baseSaveJsonPath + "output4.json");
+            Assert.IsTrue(File.Exists(baseSaveJsonPath + "output4.json"));
+            string fileContent;
+            using (StreamReader file = new StreamReader(baseSaveJsonPath + "output4.json"))
+            {
+                fileContent = await file.ReadToEndAsync();
+            }
+            Assert.AreEqual("""{"NestedFiles":[{"Postfix":"json","Name":"level-2-file1.json","Path":"./level-1-folder/level-2-file1.json"},{"Postfix":"yaml","Name":"level-2-file2.yaml","Path":"./level-1-folder/level-2-file2.yaml"}],"NestedFolders":[{"NestedFiles":[],"NestedFolders":[{"NestedFiles":[{"Postfix":"yang","Name":"level-4-file.yang","Path":"./level-1-folder/level-2-folder1/level-3-folder/level-4-file.yang"}],"NestedFolders":[],"NestedPostfixes":[{"PostfixVal":"yang","Count":1}],"Name":"level-3-folder","Path":"./level-1-folder/level-2-folder1/level-3-folder"}],"NestedPostfixes":[{"PostfixVal":"yang","Count":1}],"Name":"level-2-folder1","Path":"./level-1-folder/level-2-folder1"},{"NestedFiles":[{"Postfix":"xml","Name":"level-3-file.xml","Path":"./level-1-folder/level-2-folder2/level-3-file.xml"}],"NestedFolders":[{"NestedFiles":[],"NestedFolders":[{"NestedFiles":[],"NestedFolders":[],"NestedPostfixes":[],"Name":"level-4-folder","Path":"./level-1-folder/level-2-folder2/level-3-folder/level-4-folder"}],"NestedPostfixes":[],"Name":"level-3-folder","Path":"./level-1-folder/level-2-folder2/level-3-folder"}],"NestedPostfixes":[{"PostfixVal":"xml","Count":1}],"Name":"level-2-folder2","Path":"./level-1-folder/level-2-folder2"}],"NestedPostfixes":[{"PostfixVal":"yang","Count":1},{"PostfixVal":"json","Count":1},{"PostfixVal":"yaml","Count":1},{"PostfixVal":"xml","Count":1}],"Name":"level-1-folder","Path":"./level-1-folder"}""", 
+                fileContent);
+            Flush(baseSaveJsonPath + "output4.json");
+        }
+
+        [TestMethod]
+        public void DeserializeFolderStructureFromFile_PathIsNull()
+        {
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            Folder result = serializer.DeserializeFolderStructureFromFile(null).Result;
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void DeserializeFolderStructureFromFile_PathIsInvalid()
+        {
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            Folder result = serializer.DeserializeFolderStructureFromFile("XXXXX:\\Invalid-path\\xxx").Result;
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void DeserializeFolderStructureFromFile_PathIsValid_DeserializedSimpleStructure()
+        {
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            Folder folder = serializer.DeserializeFolderStructureFromFile(baseSaveJsonPath + "input1.json").Result;
+            Assert.IsNotNull(folder);
+            Assert.AreEqual("level-1-folder", folder.Name);
+            Assert.AreEqual("./level-1-folder", folder.Path);
+            Assert.AreEqual(0, folder.NestedFiles.Count);
+            Assert.AreEqual(0, folder.NestedFolders.Count);
+            Assert.AreEqual(0, folder.NestedPostfixes.Count);
+        }
+
+        [TestMethod]
+        public void DeserializeFolderStructureFromFile_PathIsValid_DeserializedMoreAdvancedStructure()
+        {
+            /**
+             * Structure:
+             * [level-1-folder]
+             *      - [level-2-folder1]
+             *          - [level-3-folder]
+             *              - {level-4-file.yang}
+             *      - [level-2-folder2]
+             *          - [level-3-folder]
+             *              - [level-4-folder]
+             *          - {level-3-file.xml}
+             *      - {level-2-file1.json}
+             *      - {level-2-file2.yaml}
+             */
+            CustomJsonSerializer serializer = new CustomJsonSerializer();
+            Folder folder = serializer.DeserializeFolderStructureFromFile(baseSaveJsonPath + "input2.json").Result;
+
+            // Level 1
+            Assert.AreEqual("level-1-folder", folder.Name);
+            Assert.AreEqual("./level-1-folder", folder.Path);
+            Assert.AreEqual(2, folder.NestedFolders.Count);
+            Assert.AreEqual(2, folder.NestedFiles.Count);
+            Assert.AreEqual(4, folder.NestedPostfixes.Count);
+
+            // Level 2
+            Folder level2Folder1 = folder.NestedFolders.First(f => f.Name.Equals("level-2-folder1"));
+            Folder level2Folder2 = folder.NestedFolders.First(f => f.Name.Equals("level-2-folder2"));
+            FileObject level2File1 = folder.NestedFiles.First(f => f.Name.Equals("level-2-file1.json"));
+            FileObject level2File2 = folder.NestedFiles.First(f => f.Name.Equals("level-2-file2.yaml"));
+            Assert.AreEqual("level-2-folder1", level2Folder1.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder1", level2Folder1.Path);
+            Assert.AreEqual(1, level2Folder1.NestedFolders.Count);
+            Assert.AreEqual(0, level2Folder1.NestedFiles.Count);
+            Assert.AreEqual(1, level2Folder1.NestedPostfixes.Count);
+            Assert.AreEqual("level-2-folder2", level2Folder2.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder2", level2Folder2.Path);
+            Assert.AreEqual(1, level2Folder2.NestedFolders.Count);
+            Assert.AreEqual(1, level2Folder2.NestedFiles.Count);
+            Assert.AreEqual(1, level2Folder2.NestedPostfixes.Count);
+            Assert.AreEqual("level-2-file1.json", level2File1.Name);
+            Assert.AreEqual("./level-1-folder/level-2-file1.json", level2File1.Path);
+            Assert.AreEqual("json", level2File1.Postfix);
+            Assert.AreEqual("level-2-file2.yaml", level2File2.Name);
+            Assert.AreEqual("./level-1-folder/level-2-file2.yaml", level2File2.Path);
+            Assert.AreEqual("yaml", level2File2.Postfix);
+
+            // Level 3
+            Folder level3folder1 = level2Folder1.NestedFolders.First(f => f.Name.Equals("level-3-folder"));
+            Folder level3folder2 = level2Folder2.NestedFolders.First(f => f.Name.Equals("level-3-folder"));
+            FileObject level3File = level2Folder2.NestedFiles.First();
+            Assert.AreEqual("level-3-folder", level3folder1.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder1/level-3-folder", level3folder1.Path);
+            Assert.AreEqual(0, level3folder1.NestedFolders.Count);
+            Assert.AreEqual(1, level3folder1.NestedFiles.Count);
+            Assert.AreEqual(1, level3folder1.NestedPostfixes.Count);
+            Assert.AreEqual("level-3-folder", level3folder1.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder2/level-3-folder", level3folder2.Path);
+            Assert.AreEqual(1, level3folder2.NestedFolders.Count);
+            Assert.AreEqual(0, level3folder2.NestedFiles.Count);
+            Assert.AreEqual(0, level3folder2.NestedPostfixes.Count);
+            Assert.AreEqual("level-3-file.xml", level3File.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder2/level-3-file.xml", level3File.Path);
+            Assert.AreEqual("xml", level3File.Postfix);
+
+            // Level 4
+            FileObject level4File = level3folder1.NestedFiles.First();
+            Folder level4Folder = level3folder2.NestedFolders.First();
+            Assert.AreEqual("level-4-folder", level4Folder.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder2/level-3-folder/level-4-folder", level4Folder.Path);
+            Assert.AreEqual(0, level4Folder.NestedFolders.Count);
+            Assert.AreEqual(0, level4Folder.NestedFiles.Count);
+            Assert.AreEqual(0, level4Folder.NestedPostfixes.Count);
+            Assert.AreEqual("level-4-file.yang", level4File.Name);
+            Assert.AreEqual("./level-1-folder/level-2-folder1/level-3-folder/level-4-file.yang", level4File.Path);
+            Assert.AreEqual("yang", level4File.Postfix);
+        }
     }
 }

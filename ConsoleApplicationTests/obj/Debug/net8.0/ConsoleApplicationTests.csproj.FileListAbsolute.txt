@@ -173,3 +173,10 @@ C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\obj\Debug
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\obj\Debug\net8.0\ConsoleApplicationTests.pdb
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\obj\Debug\net8.0\ConsoleApplicationTests.genruntimeconfig.cache
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\obj\Debug\net8.0\ref\ConsoleApplicationTests.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplicationTests\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll

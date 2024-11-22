@@ -1,5 +1,11 @@
 ﻿namespace ConsoleApplication.model
 {
+    /**
+     * <summary>
+     * Class <c>FileObject</c> corresponds to a File occurence in folder structure.
+     * This class contains information about file's name, path and postfix.
+     * </summary>
+     */
     public class FileObject
     {
         public string Postfix { get; set; }

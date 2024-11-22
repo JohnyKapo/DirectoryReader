@@ -13,3 +13,12 @@ C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleApplication.genruntimeconfig.cache
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ref\ConsoleApplication.dll
 C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleApplication.sourcelink.json
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleApplication.csproj.AssemblyReference.cache
+C:\Users\Johny\source\repos\ConsoleApplication\ConsoleApplication\obj\Debug\net8.0\ConsoleA.44DD3A81.Up2Date
