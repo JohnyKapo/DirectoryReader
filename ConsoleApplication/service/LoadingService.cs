@@ -94,7 +94,10 @@ namespace ConsoleApplication.service
             {
                 string fileName = file.Split('\\').Last();
                 bool containsPostfix = fileName.Contains('.');
-                string postfix = containsPostfix ? fileName.Split('.').Last() : "Without postfix";
+                string postfix = containsPostfix
+                    // Check if file contains only leading period, if there are multiple period the last one will be postfix
+                    ? fileName.Split('.').First().Equals(fileName.Split('.').Last()) ? "Without postfix" : fileName.Split('.').Last()
+                    : "Without postfix";
                 FileObject nestedFile = new FileObject(fileName, file, postfix);
                 folder.NestedFiles.Add(nestedFile);
                 Postfix filePostfix = new Postfix(postfix);

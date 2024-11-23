@@ -1,0 +1,3 @@
+bin
+obj
+!obj/ConsoleApplicationTests.csproj.nuget.g.targets

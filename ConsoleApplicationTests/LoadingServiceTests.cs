@@ -7,14 +7,16 @@ namespace ConsoleApplicationTests
     [TestClass]
     public class LoadingServiceTests
     {
-        private string GetCurrentFilePath([CallerFilePath] string filePath = "")
+        private string GetTestAssemblyDirectory()
         {
-            return filePath;
+            var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            return Path.GetDirectoryName(location);
         }
 
-        private string GetParentDirectory(string filePath)
+        private string GetResourcesFolder()
         {
-            return Directory.GetParent(filePath)?.FullName ?? string.Empty;
+            string testAssemblyDir = GetTestAssemblyDirectory();
+            return Path.Combine(testAssemblyDir, "..", "..", "..", "resources");
         }
 
         [TestMethod]
@@ -35,14 +37,17 @@ namespace ConsoleApplicationTests
         public void LoadUpFolderContent_InputPathIsAFile()
         {
             LoadingService service = new LoadingService();
-            Assert.IsNull(service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_InputPathIsAFile\\level-1-file.json"));
+            Assert.IsNull(service.LoadUpFolderContent(Path.Combine(GetResourcesFolder(), "LoadUpFolderContent_InputPathIsAFile", "level-1-file.json")));
         }
 
+        /**
+         * When tested via github actions, specific folder must be created before testing [level-1-folder]
+         */
         [TestMethod]
         public void LoadUpFolderContent_SingleLevelFolder()
         {
             LoadingService service = new LoadingService();
-            Folder folder = service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_SingleLevelFolder\\level-1-folder");
+            Folder folder = service.LoadUpFolderContent(Path.Combine(GetResourcesFolder(), "LoadUpFolderContent_SingleLevelFolder", "level-1-folder"));
             Assert.IsNotNull(folder);
             Assert.AreEqual("level-1-folder", folder.Name);
             Assert.IsTrue(folder.NestedFolders.Count == 0);
@@ -50,11 +55,14 @@ namespace ConsoleApplicationTests
             Assert.IsTrue(folder.NestedPostfixes.Count == 0);
         }
 
+        /**
+         * When tested via github actions, specific folder must be created before testing [level-1-folder\level-2-folder]
+         */
         [TestMethod]
         public void LoadUpFolderContent_ContainsOneFolderAndOneFile()
         {
             LoadingService service = new LoadingService();
-            Folder folder = service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_ContainsOneFolderAndOneFile\\level-1-folder");
+            Folder folder = service.LoadUpFolderContent(Path.Combine(GetResourcesFolder(), "LoadUpFolderContent_ContainsOneFolderAndOneFile", "level-1-folder"));
             Assert.IsNotNull(folder);
             Assert.AreEqual("level-1-folder", folder.Name);
             Assert.IsTrue(folder.NestedFolders.Count == 1);
@@ -83,7 +91,7 @@ namespace ConsoleApplicationTests
         public void LoadUpFolderContent_ContainsMultiplePostfixTypes()
         {
             LoadingService service = new LoadingService();
-            Folder folder = service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_ContainsMultiplePostfixTypes\\level-1-folder");
+            Folder folder = service.LoadUpFolderContent(Path.Combine(GetResourcesFolder(), "LoadUpFolderContent_ContainsMultiplePostfixTypes", "level-1-folder"));
             Assert.IsNotNull(folder);
             Assert.AreEqual("level-1-folder", folder.Name);
             Assert.IsTrue(folder.NestedFolders.Count == 1);
@@ -114,7 +122,7 @@ namespace ConsoleApplicationTests
         public void LoadUpFolderContent_FileContainsMultiplePeriods()
         {
             LoadingService service = new LoadingService();
-            Folder folder = service.LoadUpFolderContent(GetParentDirectory(GetCurrentFilePath()) + "\\resources\\LoadUpFolderContent_FileContainsMultiplePeriods\\level-1-folder");
+            Folder folder = service.LoadUpFolderContent(Path.Combine(GetResourcesFolder(), "LoadUpFolderContent_FileContainsMultiplePeriods", "level-1-folder"));
             Assert.IsNotNull(folder);
             Assert.AreEqual("level-1-folder", folder.Name);
             Assert.IsTrue(folder.NestedFolders.Count == 0);
