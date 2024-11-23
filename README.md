@@ -1,5 +1,5 @@
 
-# DirectoryReader - assignement for Siemens Healthineers
+# DirectoryReader - assignment for Siemens Healthineers
 
 Assignement:
 
